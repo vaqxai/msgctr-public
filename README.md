@@ -1,6 +1,6 @@
 # Messenger Counter
 [![File size](https://img.shields.io/github/repo-size/vakkendwarf/msgctr-public)](https://img.shields.io/github/repo-size/vakkendwarf/msgctr-public)
-[![Version](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr/cronox)](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr-public/master)
+[![Version](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr-public)](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr-public)
 [![Last Update](https://img.shields.io/github/last-commit/vakkendwarf/msgctr-public)](https://img.shields.io/github/last-commit/vakkendwarf/msgctr-public)
 
 Automated bot to count fb messenger messages.
