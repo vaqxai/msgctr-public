@@ -1,12 +1,12 @@
 # Messenger Counter
-[![Build status](https://ci.appveyor.com/api/projects/status/1c7or8cin5fgohhd/branch/cronox?svg=true)](https://ci.appveyor.com/project/vakkendwarf/msgctr/branch/cronox)
-[![File size](https://img.shields.io/github/repo-size/vakkendwarf/msgctr)](https://img.shields.io/github/repo-size/vakkendwarf/msgctr)
-[![Version](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr/cronox)](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr/cronox)
-[![Last Update](https://img.shields.io/github/last-commit/vakkendwarf/msgctr)](https://img.shields.io/github/last-commit/vakkendwarf/msgctr)
+[![File size](https://img.shields.io/github/repo-size/vakkendwarf/msgctr-public)](https://img.shields.io/github/repo-size/vakkendwarf/msgctr-public)
+[![Version](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr/cronox)](https://img.shields.io/github/package-json/v/vakkendwarf/msgctr-public/master)
+[![Last Update](https://img.shields.io/github/last-commit/vakkendwarf/msgctr-public)](https://img.shields.io/github/last-commit/vakkendwarf/msgctr-public)
 
 Automated bot to count fb messenger messages.
 
 A fair warning: This is a (mostly) private project. If you're not fluent in JS, you will not be able to use it.
+It requires manual generation of google sheets credentials, and manual insertion of certain info like convo ID and sheet ID into the js script yourself.
 
 #### Change Log:
 - 5.5.0 - Removed sensitive information. Published for general use and portfolio reference.
