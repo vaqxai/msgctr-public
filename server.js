@@ -1,4 +1,5 @@
 // BIG-ASS-TODO: Move appstate.json and other secretive files to an off-site, and most importantly SAFE database.
+// ^ did it, they're in a private repo :D
 // Ad. 1: Need to find a way to safely access these files. Perhaps a serverside database credential file or an sqlite database,
 // That is either only on the server, or on a private branch (or a private copy of this repo?)
 
