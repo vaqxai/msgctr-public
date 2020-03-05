@@ -7,7 +7,7 @@ var rl = readline.createInterface({
   output: process.stdout
 });
 
-const obj = {email: "oryginal24@o2.pl", password: "Razze2247p"};
+const obj = {email: "", password: ""}; // Insert your facebook login here.
 
 login(obj, (err, api) => {
 
