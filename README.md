@@ -9,7 +9,7 @@ Automated bot to count fb messenger messages.
 A fair warning: This is a (mostly) private project. If you're not fluent in JS, you will not be able to use it.
 It requires manual generation of google sheets credentials, and manual insertion of certain info like convo ID and sheet ID into the js script yourself.
 
-# Setup tutorial
+## Setup tutorial
  1. Insert your facebook credentials into regen-appstate.js
  2. Run `node regen-appstate` from within the root directory
  3. Edit server.js and enter your facebook conversation id into the `login` function.
@@ -17,7 +17,7 @@ It requires manual generation of google sheets credentials, and manual insertion
  5. Run `node server` and configure sheets credentials
  6. Exit and run `node server` again. Your webpage should be available on `localhost:8080` or if you're running this under a service (eg. Heroku) it will automatically assign a port.
 
-#### Change Log:
+## Change Log:
 - 5.5.0 - Removed sensitive information. Published for general use and portfolio reference.
 - 5.4.0 - Changed AppState to GeneratedSession. Passwords no longer stored anywhere.
 - 5.3.2 - AppVeyor integration
