@@ -1,0 +1,2 @@
+node regen-appstate
+pause

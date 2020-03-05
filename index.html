@@ -1,0 +1,258 @@
+<html>
+<head>
+  <title>Cronox Message Counter</title>
+
+  <link rel="icon" type="image/png" href="https://i.imgur.com/9XmsBYM.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://i.imgur.com/OeGwxg7.png" />
+
+  <link rel="stylesheet" type="text/css" href="index.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <script>
+    window.odometerOptions = {
+      format: "( ddd).ddddd",
+    };
+  </script>
+
+  <link rel="stylesheet" href="odometer/odometer.css" />
+  <script src="odometer/odometer.js"></script>
+
+	<link rel="stylesheet" href="notify/animation.css" />
+
+  <script>
+
+  var curct = 0;
+  var curti = 0;
+  var curut = 0;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var socket = io();
+      socket.on('change_text_ct', function(data) {
+        document.getElementById('message_count').innerHTML = data.pagetext;
+        curct = data.pagetext;
+      });
+      socket.on('change_text_ut', function(data) {
+        document.getElementById('until_thousand_count').innerHTML = data.pagetext;
+        curut = data.pagetext;
+      });
+      socket.on('toggle_panel', function(data) {
+        document.getElementById('panel_buttons').style.display = 'inline';
+        document.getElementById('panel_password_form').style.display = 'none';
+      })
+      socket.on('trying_save', function(data) {
+        actually_save(
+          data.today,
+          data.curcell,
+          data.curmsg,
+          data.curtim
+        );
+      })
+      socket.on('err', function(data){
+        alert('Error from regen-appstate!');
+        document.getElementById('err_log').style.display='inline';
+        if(data.err){
+          document.getElementById('err_log').innerHTML = data.err;
+        } else {
+          document.getElementById('err_log').innerHTML = "unknown error from regen-appstate";
+        }
+      })
+    });
+
+  function send_ok_button_data () {
+    var socket = io();
+    var password = document.getElementById('password_field').value;
+    if (password == '') {
+      return;
+    }
+    console.log(password);
+    socket.emit('ok_button_pressed', {password: password});
+    document.getElementById('password_field').value = '';
+  }
+
+  function try_save_today() {
+    var socket = io();
+    socket.emit('try_save_today');
+  }
+
+  function try_save_yesterday() {
+    var socket = io();
+      socket.emit('try_save_yesterday');
+  }
+
+  function f_relogin() {
+    alert("Uwaga logowanie ponowne")
+    var socket = io();
+      socket.emit('relogin');
+  }
+
+  function regen_appstate(loginpass){
+    var socket = io();
+    var login = loginpass.split(":")[0];
+    var pass = loginpass.split(":")[1];
+    socket.emit('regen_appstate', {login: login, pass: pass});
+//    var process = child_process.fork("regen-appstate-auto.js", [login, pass])
+  }
+
+  function try_regen_appstate() {
+    var socket = io();
+    var loginpass = prompt("Wpisz login:hasło");
+    if( confirm("Wpisałeś: '" + loginpass + "'?")){
+      regen_appstate(loginpass);
+    } else {
+      socket.emit(alert("Nie zapisano."));
+    }
+  }
+
+  function actually_save (today, address, amount, time) {
+
+    var socket = io();
+
+    if(today){
+
+      if( confirm("Czy na pewno chcesz zapisać " + amount + " wiadomości, " + time + " w komórce " + address + " jako dzisiaj?") ) {
+        socket.emit('actually_save', {
+          address: address,
+          amount: amount
+        })
+      } else {
+        socket.emit(alert("Nie zapisano."));
+      }
+
+    } else {
+
+        if( confirm("Czy na pewno chcesz zapisać " + amount + " wiadomości, " + time + " w komórce " + address + " jako wczoraj?") ) {
+          socket.emit('actually_save', {
+            address: address,
+            amount: amount
+          })
+        } else {
+          socket.emit(alert("Nie Zapisano."));
+        }
+      }
+
+    }
+
+  function change_paneltext_back() {
+    document.getElementById('panel_name').innerHTML('PANEL');
+  }
+
+
+  function getcurct () {
+    return curct;
+  }
+
+  function getcurti () {
+    return curti;
+  }
+
+  function getcurut () {
+    return curut;
+  }
+
+  function getcurpvl () {
+    return curpvl;
+  }
+
+  function getcurprg () {
+    return curprg;
+  }
+
+  </script>
+
+  <script src="notify/notification.js"></script>
+
+  <script>
+  function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log('Fallback: Copying text command was ' + msg);
+
+    if (successful) {
+    $.notify({
+    message: 'Copied to clipboard!'
+    },{
+    type: 'success'
+    });
+    }
+
+    } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+  }
+  function copy(text) {
+    if (!navigator.clipboard) {
+    fallbackCopyTextToClipboard(text);
+
+    return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+    $.notify({
+    message: 'Copied to clipboard!'
+    },{
+    type: 'success'
+    });
+    console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+    console.error('Async: Could not copy text: ', err);
+    });
+  }
+  </script>
+
+</head>
+<body>
+  <center>
+
+  <div id="title_section">
+    <span id="title_text">Cronox</span>
+    <br>
+    <span id="err" style="align:center; color:red;"></span>
+  </div>
+
+  <div id="message_count_section" onclick="copy(getcurct())">
+    <span id="message_count" class="odometer"></span>
+    <br>
+    <span id="message_text">WIAD</span>
+  </div>
+
+  <div id="until_thousand_section" onclick="copy(getcurut())">
+    <span id="until_thousand_count" class="odometer"></span>
+    <br>
+    <span id="until_thousand_text">DO 1000</span>
+  </div>
+
+  <div id="panel_section">
+    <span id="panel_name">PANEL</span><br>
+      <form id="panel_password_form">
+        <input id="password_field" type="password" name="password">
+        </input>
+        <input type="button" name="OK" value="OK" onclick="send_ok_button_data()">
+        </input>
+      </form>
+      <form id="panel_buttons" style="display: none;">
+        <input type="button" name="wstaw_dzisiaj" value="Wstaw Dzisiaj" onclick="try_save_today()">
+        <input type="button" name="wstaw_wczoraj" value="Wstaw Wczoraj" onclick="try_save_yesterday()">
+        <br>
+        <input type="button" name="regeneruj_appstate" value="Regeneruj AppState" onclick="try_regen_appstate()">
+        <input type="button" name="relogin" value="ReLogin" onclick="f_relogin()">
+      </form>
+    <span id="panel_field"></span>
+  </div>
+
+  </center>
+</body>
+</html>
