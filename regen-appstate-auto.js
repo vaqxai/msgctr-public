@@ -1,3 +1,4 @@
+// This one is used from the webpage itself.
 const fs = require("fs");
 const login = require("facebook-chat-api");
 const simpleGit = require('simple-git');
