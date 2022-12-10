@@ -5,7 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "chalk": "^2.4.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "facebook-chat-api": "^1.7.0",
     "googleapis": "^42.0.0",
     "moment": "^2.22.2",
