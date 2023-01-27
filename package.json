@@ -10,7 +10,7 @@
     "googleapis": "^42.0.0",
     "moment": "^2.22.2",
     "prompt": "^1.0.0",
-    "simple-git": "^3.3.0",
+    "simple-git": "^3.16.0",
     "socket.io": "^2.4.0"
   },
   "engine": {
